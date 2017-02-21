@@ -1,0 +1,42 @@
+body {
+background-color: black;
+margin:0;
+overflow: hidden;
+}
+#container {
+  width: 100vw;
+  height:100vh;
+}
+
+#downlog {color: yellow; position: fixed; bottom: 10px;left:10px;}
+#uplog {color: lime; position: fixed; bottom: 10px;left:135px;}
+#movelog {color: pink; position: fixed; bottom: 10px;left:245px;}
+#demo3 {color: white; position: fixed; bottom: 10px;left:390px;}
+#videocontainer {
+  font-size: 0px;
+}
+.vids {
+border: 1px solid white;
+position: absolute;
+transform: translate(100%);
+
+}
+
+/* Safari 4.0 - 8.0 */
+/*@-webkit-keyframes reel {
+  from {right: -360px;}
+  to {right: 100%;}
+}
+@keyframes reel {
+    from {right: -360px;}
+    to {right: 100%;}
+}
+
+@-webkit-keyframes reel1 {
+  from {right: 0px;}
+  to {right: calc(100% + 0px);}
+}
+@keyframes reel1 {
+  from {right: 360px;}
+  to {right: calc(100% + 360px);}
+}*/
