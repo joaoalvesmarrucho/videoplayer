@@ -1,0 +1,15 @@
+Basically this site should behave like this one here: http://samedaysforever.com/
+When the window is clicked and dragged: 
+  1 ) videos should move along the mouse (left or right)
+  2 ) at the same time videos should invert play 
+                  > when mouse drag is left videos run naturally forward 
+                  > when mouse drag goes right videos runs backwards
+When a single video is clicked
+  1) that video is enlarged and starts from the begining 
+  2) next to the video there should be a side bar with some information and controls (minimise video, text and links)
+  3) the site keeps on running in the back
+  
+This is pretty much it.
+I have made to the point of moving the videos around, detecting if there is a click or a drag.
+
+                 
