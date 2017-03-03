@@ -5,8 +5,6 @@
 <link rel="stylesheet" type="text/css" href="css/style.css">
 <script src="js/jquery-1.9.1.js"></script>
 <script src="js/jquery-ui.js"></script>
-<script src="js/main.js"></script>
-
 <link rel=stylesheet href="css/jquery-ui.css" />
 </head>
 <body>
@@ -21,17 +19,17 @@
       <source src="vid/reel.mp4" type="video/webm" />
       Your browser does not support the video tag.
     </video>
-    <video class="vids" autoplay loop id="reel3" style="top:0px; width:360px; height:203px;">
+    <!-- <video class="vids" autoplay loop id="reel3" style="top:0px; width:360px; height:203px;">
       <source src="vid/reel.mp4" type="video/webm" />
       Your browser does not support the video tag.
     </video>
     <video class="vids" autoplay loop id="reel4" style="top:0px; width:360px; height:203px;">
       <source src="vid/reel.mp4" type="video/webm" />
       Your browser does not support the video tag.
-    </video>
+    </video> -->
   </span>
 <!--small videos -->
-  <span>
+  <!-- <span>
     <video class="vids" data-rightpos="3600" autoplay loop id="reelsmall" style="top:1px; width:180px; height:100px; ;">
       <source src="vid/reel.mp4" type="video/webm" />
       Your browser does not support the video tag.
@@ -64,11 +62,128 @@
       <source src="vid/reel.mp4" type="video/webm" />
       Your browser does not support the video tag.
     </video>
-  </span>
+  </span> -->
 </div>
 <div id="downlog"></div>
 <div id="uplog"></div>
 <div id="movelog"></div>
 <div id="demo3"></div>
+<script>
+// raf polyfill
+window.requestAnimFrame = (function(){
+return  window.requestAnimationFrame ||
+        window.webkitRequestAnimationFrame ||
+        window.mozRequestAnimationFrame ||
+        window.oRequestAnimationFrame ||
+        window.msRequestAnimationFrame ||
+     function(/* function FrameRequestCallback */ callback, /* DOMElement Element */ element){
+       window.setTimeout(callback, 1000 / 60);
+     };
+})();
+
+// mouse variables
+var mouseDownX;
+var mouseDownY;
+var mouseUpX;
+var mouseUpY;
+var mouseMoveX;
+var mouseMoveY;
+var drag;
+var clicking = false;
+var flag = 0;
+//get all videos from the Class array
+var videos = document.getElementsByClassName("vids");
+var speed = 10;
+//animating actions
+var startTime = undefined;
+
+//detect if it's a mouse click or a mouse drag
+  // document.addEventListener("mousedown", function() {
+  //   flag = 0;
+  // }, false);
+  // document.addEventListener("mousemove", function() {
+  //   flag = 1;
+  // }, false);
+  // document.addEventListener("mouseup", function() {
+  //   if (flag === 0){
+  //     console.log("This was a click");
+  //     $("body").mousedown(function down(e) {
+  //         handleMouseDown(e);
+  //     });
+  //   }
+  //   else if(flag === 1){
+  //     console.log("this was a drag");
+  //   }
+  // }, false);
+
+
+function handleMouseDown(e) {
+    clicking = true;
+    mouseDownX = parseInt(e.clientX);
+    mouseDownY = parseInt(e.clientY);
+    console.log( "Mouse Down: " +  mouseDownX, mouseDownY);
+}
+function handleMouseUp(e) {
+    clicking = false;
+    mouseUpX = parseInt(e.clientX);
+    mouseUpY = parseInt(e.clientY);
+    console.log("Mouse Up: " + mouseUpX, mouseUpY);
+}
+$("body").mousedown(function down(e) {
+    handleMouseDown(e);
+});
+$("body").mouseup(function up(e) {
+    handleMouseUp(e);
+});
+
+function handleMouseMove(e) {
+  if(clicking == false) return;
+  else {
+    mouseMoveX = parseInt(e.clientX);
+    mouseMoveY = parseInt(e.clientY);
+//need to add mousemoveX everytime we drag
+    drag = Math.floor(Math.sqrt( (mouseDownX - mouseMoveX)*(mouseDownX-mouseMoveX)+(mouseDownY-mouseMoveY)*(mouseDownY-mouseMoveY) ));
+    drag *= mouseMoveX > mouseDownX ? 1 : -1;
+    drag = drag;
+    console.log("drag: " + drag);
+  }
+}
+
+$("body").mousemove(function (e) {
+    handleMouseMove(e);
+    direction();
+});
+
+function direction(){
+  if (drag <= 0 ) {
+    var direction = 'left';
+  }
+  else {
+    direction = 'right';
+  }
+}
+
+function render(time) {
+
+    if (time === undefined)
+    time = Date.now();
+    if (startTime === undefined)
+    startTime = time;
+    //LINE 1
+    //big videos
+    var move = ((time - startTime - (drag * 8) )/speed % 2880) + "px";
+    direction();
+    reel.style.right = move;
+    reel2.style.right = move;
+}
+
+
+document.ready  = function() {
+    (function videos(){
+       render();
+       requestAnimFrame(videos);
+    })();
+};
+     </script>
 </body>
 </html>
